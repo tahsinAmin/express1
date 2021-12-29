@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* switch slider start */
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+      }
+
+      input:checked + .slider {
+        background-color: #00cd92;
+      }
+
+      input:focus + .slider {
+        box-shadow: 0 0 1px #00cd92;
+      }
+
+      input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+      }
+    </style>
+    <title>Weather, Colorado</title>
+  </head>
+  <body class="container mx-auto">
+    <div class="my-12 px-4 sm:px-0">
+      <div class="flex justify-between items-center">
+        <div>
+          <header class="font-medium text-xl sm:text-2xl text-blue-900">
+            Weather in Colorado, US
+          </header>
+          <p class="text-gray-600 font-medium mt-4">
+            View the weather forecast for Colorado before booking your Colorado
+            vacation rental to confirm your best time to go.
+          </p>
+        </div>
+        <div class="toggle flex items-center space-x-2 text-gray-300 text-2xl">
+          <div class="text-gray-600 letter-toggle">°C</div>
+          <label class="switch">
+            <input
+              type="checkbox"
+              id="toggle-weather"
+              onclick="toggle_weather()"
+            />
+            <span class="slider round"></span>
+          </label>
+          <div class="letter-toggle">F</div>
+        </div>
+      </div>
+      <div class="mt-6 grid grid-cols-1 sm:grid-cols-4 gap-4 drop-shadow-xl">
+        <div
+          class="
+            rounded-lg
+            sm:h-auto
+            bg-white
+            text-black text-2xl
+            font-light
+            p-4
+            hover:scale-105
+            transform
+            transition
+            duration-300
+            ease-out
+            flex flex-col
+            space-y-2
+          "
+        >
+          <div class="flex justify-left">
+            <img src="/img/weather/cloud.JPG" alt="" />
+          </div>
+          <div>
+            <p class="font-medium text-black">December - February</p>
+            <div class="flex font-normal text-gray-600 space-x-4 weather_tog">
+              <span>High 3°C</span>
+              <span>Low -16°C</span>
+            </div>
+            <div
+              class="
+                flex
+                hidden
+                font-normal
+                text-gray-600
+                space-x-4
+                weather_tog
+              "
+            >
+              <span class="truncate">High 37.4F</span>
+              <span class="truncate">Low 3.2F</span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="
+            rounded-lg
+            sm:h-auto
+            bg-white
+            text-black text-2xl
+            font-light
+            p-4
+            hover:scale-105
+            transform
+            transition
+            duration-300
+            ease-out
+            flex flex-col
+            space-y-2
+          "
+        >
+          <div class="flex justify-left">
+            <img src="/img/weather/snow.JPG" alt="" />
+          </div>
+          <div>
+            <p class="font-medium text-black">March - May</p>
+            <div class="flex font-normal text-gray-600 space-x-4 weather_tog">
+              <span>High 12°C</span>
+              <span>Low -7°C</span>
+            </div>
+            <div
+              class="
+                flex
+                hidden
+                font-normal
+                text-gray-600
+                space-x-4
+                weather_tog
+              "
+            >
+              <span class="truncate">High 53.6F</span>
+              <span class="truncate">Low 19.4F</span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="
+            rounded-lg
+            sm:h-auto
+            bg-white
+            text-black text-2xl
+            font-light
+            p-4
+            hover:scale-105
+            transform
+            transition
+            duration-300
+            ease-out
+            flex flex-col
+            space-y-2
+          "
+        >
+          <div class="flex justify-left">
+            <img src="/img/weather/sunny.JPG" alt="" />
+          </div>
+          <div>
+            <p class="font-medium text-black">June - August</p>
+            <div class="flex font-normal text-gray-600 space-x-4 weather_tog">
+              <span>High 23°C</span>
+              <span>Low 1°C</span>
+            </div>
+            <div
+              class="
+                flex
+                hidden
+                font-normal
+                text-gray-600
+                space-x-4
+                weather_tog
+              "
+            >
+              <span class="truncate">High 73.4F</span>
+              <span class="truncate">Low 33.8F</span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="
+            rounded-lg
+            sm:h-auto
+            bg-white
+            text-black text-2xl
+            font-light
+            p-4
+            hover:scale-105
+            transform
+            transition
+            duration-300
+            ease-out
+            flex flex-col
+            space-y-2
+          "
+        >
+          <div class="flex justify-left">
+            <img src="/img/weather/rainy.JPG" alt="" />
+          </div>
+          <div>
+            <p class="font-medium text-black">September - November</p>
+            <div class="flex font-normal text-gray-600 space-x-4 weather_tog">
+              <span>High 19°C</span>
+              <span>Low -7°C</span>
+            </div>
+            <div
+              class="
+                flex
+                hidden
+                font-normal
+                text-gray-600
+                space-x-4
+                weather_tog
+              "
+            >
+              <span class="truncate">High 66.2F</span>
+              <span class="truncate">Low 19.4F</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Toggle Weather Start
+      let toggleDivs = document.getElementsByClassName("weather_tog");
+      let letterToggle = document.getElementsByClassName("letter-toggle");
+      function tog() {
+        for (let i = 0; i < toggleDivs.length; i++) {
+          letterToggle[i].classList.toggle("text-gray-600");
+        }
+      }
+      function toggle_weather() {
+        for (let j = 0; j < toggleDivs.length; j++) {
+          toggleDivs[j].classList.toggle("hidden");
+        }
+        tog();
+      }
+      // Toggle Weather End
+    </script>
+  </body>
+</html>
