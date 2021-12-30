@@ -8,6 +8,7 @@
 - [x] 6. Using of deconstructor
 - [x] 7. Rate Limiter
 - [x] 8. Write in json file if object not present
+- [x] 9. Show Data from json file if present
 
 # Tools Used
 

@@ -28,32 +28,47 @@ app.get("/all/:country/:city", limiter, ({ params }, res) => {
   console.log(country, city);
   var data = fs.readFileSync("data.json");
   const url_api = `http://api.weatherapi.com/v1/current.json?key=e6a73467a3e94aa184c122435212812&q=${city}&aqi=no`;
-  axios.get(url_api).then((response) => {
-    var jsonObject = JSON.stringify(response.data);
-    var object = JSON.parse(jsonObject);
-    var jsonRead = JSON.parse(data);
-    let flag = true;
 
-    for (let i = 0; i < jsonRead.length; i++) {
-      const q = jsonRead[i]["location"]["name"].toLocaleLowerCase();
-      console.log(q);
-      if (q == city) flag = !flag;
+  var jsonRead = JSON.parse(data);
+  let flag = true;
+  let gottem;
+
+  for (let i = 0; i < jsonRead.length; i++) {
+    const q = jsonRead[i]["location"]["name"].toLocaleLowerCase();
+    console.log(q);
+    if (q == city) {
+      var object = jsonRead[i];
+      console.log("Fetch from json file");
+      flag = !flag;
+      gottem = jsonRead[i];
+      break;
     }
-    if (flag) {
+  }
+
+  if (flag) {
+    console.log("Fetch from API");
+    axios.get(url_api).then((response) => {
+      var jsonObject = JSON.stringify(response.data);
+      var object = JSON.parse(jsonObject);
       jsonRead.push(object);
-      console.log(jsonRead);
       var newData2 = JSON.stringify(jsonRead);
       fs.writeFileSync("data.json", newData2);
-    }
-
-    const { location, current } = object;
-    res.render("index", {
-      city: location.name,
-      country: location.country,
-      temp_c: current.temp_c,
-      temp_f: current.temp_f,
+      const { location, current } = object;
+      res.render("index", {
+        city: location.name,
+        country: location.country,
+        temp_c: current.temp_c,
+        temp_f: current.temp_f,
+      });
     });
-  });
+  } else {
+    res.render("index", {
+      city: gottem["location"]["name"],
+      country: gottem["location"]["country"],
+      temp_c: gottem["current"]["temp_c"],
+      temp_f: gottem["current"]["temp_f"],
+    });
+  }
 });
 const PORT = process.env.PORT || 3000;
 
