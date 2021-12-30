@@ -47,20 +47,58 @@ app.get("/all/:country/:city", limiter, ({ params }, res) => {
 
   if (flag) {
     console.log("Fetch from API");
-    axios.get(url_api).then((response) => {
-      var jsonObject = JSON.stringify(response.data);
-      var object = JSON.parse(jsonObject);
-      jsonRead.push(object);
-      var newData2 = JSON.stringify(jsonRead);
-      fs.writeFileSync("data.json", newData2);
-      const { location, current } = object;
-      res.render("index", {
-        city: location.name,
-        country: location.country,
-        temp_c: current.temp_c,
-        temp_f: current.temp_f,
+    axios
+      .get(url_api)
+      .then((response) => {
+        var jsonObject = JSON.stringify(response.data);
+        var object = JSON.parse(jsonObject);
+        if (object["error"]) {
+          res.render("bad", {
+            message: "BAD REQUEST 404!!",
+          });
+        } else {
+          jsonRead.push(object);
+          var newData2 = JSON.stringify(jsonRead);
+          fs.writeFileSync("data.json", newData2);
+          const { location, current } = object;
+          if (country == location.country.toLocaleLowerCase()) {
+            res.render("index", {
+              city: location.name,
+              country: location.country,
+              temp_c: current.temp_c,
+              temp_f: current.temp_f,
+            });
+          } else {
+            res.render("bad", {
+              message: "BAD REQUEST 404!!",
+            });
+          }
+        }
+      })
+      // .catch((error) => {
+      //   console.log(error);
+      //   res.render("bad", {
+      //     message: "BAD REQUEST 404!!",
+      //   });
+      // });
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log("Error", error.message);
+        }
+        console.log(error.config);
       });
-    });
   } else {
     res.render("index", {
       city: gottem["location"]["name"],
