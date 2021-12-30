@@ -6,7 +6,8 @@
 - [x] 4. Show city name as a heading in the index file
 - [x] 5. Showing temperature and topggle from C to f and vice versa
 - [x] 6. Using of deconstructor
-- [ ] 7. Rate Limiter
+- [x] 7. Rate Limiter
+- [x] 8. Write in json file if object not present
 
 # Tools Used
 
@@ -15,3 +16,7 @@
 - ExpressJS
 - Javascript
 - TailwindCSS(CSS framework)
+
+# functions
+
+- Rate Limiter
