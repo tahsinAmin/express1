@@ -57,6 +57,15 @@
         -ms-transform: translateX(26px);
         transform: translateX(26px);
       }
+      /* Rounded sliders */
+      .slider.round {
+        border-radius: 34px;
+      }
+
+      .slider.round:before {
+        border-radius: 50%;
+      }
+      /* switch slider end */
     </style>
     <title>Weather, Colorado</title>
   </head>
@@ -72,17 +81,17 @@
             vacation rental to confirm your best time to go.
           </p>
         </div>
-        <div class="toggle flex items-center space-x-2 text-gray-300 text-2xl">
-          <div class="text-gray-600 letter-toggle">°C</div>
+        <div class="toggle flex items-center space-x-2 text-gray-600 text-2xl">
+          <div class="letter-toggle">°C</div>
           <label class="switch">
             <input
               type="checkbox"
               id="toggle-weather"
               onclick="toggle_weather()"
             />
-            <span class="slider round"></span>
+            <span class="slider round bg-blue-900"></span>
           </label>
-          <div class="letter-toggle">F</div>
+          <div class="letter-toggle opacity-30">F</div>
         </div>
       </div>
       <div class="mt-6 grid grid-cols-1 sm:grid-cols-4 gap-4 drop-shadow-xl">
@@ -258,7 +267,7 @@
       let letterToggle = document.getElementsByClassName("letter-toggle");
       function tog() {
         for (let i = 0; i < toggleDivs.length; i++) {
-          letterToggle[i].classList.toggle("text-gray-600");
+          letterToggle[i].classList.toggle("opacity-30");
         }
       }
       function toggle_weather() {
