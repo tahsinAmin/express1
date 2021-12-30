@@ -18,6 +18,8 @@ router.get("/all/:country/:city", ({ params }, res) => {
     res.render("index", {
       city: object.location.name,
       country: object.location.country,
+      temp_c: object.current.temp_c,
+      temp_f: object.current.temp_f,
     });
   });
 });
