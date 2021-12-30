@@ -9,7 +9,12 @@
 - [x] 7. Rate Limiter
 - [x] 8. Write in json file if object not present
 - [x] 9. Show Data from json file if present
-- [ ] 10. If no city found with that name, show some other page or alert
+- [x] 10. Showing a page with an error meesage If no city found with that name
+
+# Optimization
+
+- [ ] 404 Page betterment
+- [ ] Put the whole project here.
 
 # Tools Used
 

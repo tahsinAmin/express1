@@ -25,7 +25,7 @@ app.set("view engine", "ejs");
 
 app.get("/all/:country/:city", limiter, ({ params }, res) => {
   const { country, city } = params;
-  console.log(country, city);
+  // console.log(country, city);
   var data = fs.readFileSync("data.json");
   const url_api = `http://api.weatherapi.com/v1/current.json?key=e6a73467a3e94aa184c122435212812&q=${city}&aqi=no`;
 
@@ -35,7 +35,6 @@ app.get("/all/:country/:city", limiter, ({ params }, res) => {
 
   for (let i = 0; i < jsonRead.length; i++) {
     const q = jsonRead[i]["location"]["name"].toLocaleLowerCase();
-    console.log(q);
     if (q == city) {
       var object = jsonRead[i];
       console.log("Fetch from json file");
@@ -52,16 +51,18 @@ app.get("/all/:country/:city", limiter, ({ params }, res) => {
       .then((response) => {
         var jsonObject = JSON.stringify(response.data);
         var object = JSON.parse(jsonObject);
-        if (object["error"]) {
+        if (object == undefined) {
           res.render("bad", {
-            message: "BAD REQUEST 404!!",
+            message: "1. BAD REQUEST 404!!",
           });
         } else {
           jsonRead.push(object);
           var newData2 = JSON.stringify(jsonRead);
           fs.writeFileSync("data.json", newData2);
           const { location, current } = object;
-          if (country == location.country.toLocaleLowerCase()) {
+          if (
+            country.toLocaleLowerCase() == location.country.toLocaleLowerCase()
+          ) {
             res.render("index", {
               city: location.name,
               country: location.country,
@@ -70,34 +71,17 @@ app.get("/all/:country/:city", limiter, ({ params }, res) => {
             });
           } else {
             res.render("bad", {
-              message: "BAD REQUEST 404!!",
+              message: "BAD REQUEST 404! City name doesn't match with country",
             });
           }
         }
       })
-      // .catch((error) => {
-      //   console.log(error);
-      //   res.render("bad", {
-      //     message: "BAD REQUEST 404!!",
-      //   });
-      // });
       .catch(function (error) {
         if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(error.request);
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log("Error", error.message);
+          res.render("bad", {
+            message: error.response.data.error.message,
+          });
         }
-        console.log(error.config);
       });
   } else {
     res.render("index", {
