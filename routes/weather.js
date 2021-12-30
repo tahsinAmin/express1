@@ -14,12 +14,13 @@ router.get("/all/:country/:city", ({ params }, res) => {
   axios.get(url_api).then((response) => {
     var jsonObject = JSON.stringify(response.data);
     var object = JSON.parse(jsonObject);
-    console.log(object.location.name);
+    const { location, current } = object;
+    // console.log(object.location.name);
     res.render("index", {
-      city: object.location.name,
-      country: object.location.country,
-      temp_c: object.current.temp_c,
-      temp_f: object.current.temp_f,
+      city: location.name,
+      country: location.country,
+      temp_c: current.temp_c,
+      temp_f: current.temp_f,
     });
   });
 });
