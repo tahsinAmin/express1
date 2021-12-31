@@ -7,10 +7,12 @@
 - [x] 5. Showing temperature and topggle from C to f and vice versa
 - [x] 6. Using of deconstructor
 - [x] 7. Rate Limiter
-- [x] 8. Write in json file if oject not present
-- [x] 9. Show Data from json file if present
+- [x] 8. (JSON File) Write in json file if object not present
+- [x] 9. (JSON File) Show Data from json file if present
 - [x] 10. Showing a page with an error meesage If no city found with that name
-- [x] 11. Using Historical data to show in page
+- [x] 11. (Historical Data) Able to show 1 average data and show the same value in everywhere
+- [x] 12. (Historical Data) Able to show 4 average data
+- [ ] 13. (Historical Data) find the lowest and higest temp and show it
 
 # Optimization
 
@@ -37,3 +39,7 @@
 - Remove "if (object == undefined) {"
 - remove the variable name
 - whether we have our data in the json file or get it from api, before sending i to html, we have to do the weather calculation. So, wee need to put the code calculation on both of their blocks. Is their an alternatove way to it? (Function call)
+
+# Problem
+
+- My duplicate hotkeys don't work

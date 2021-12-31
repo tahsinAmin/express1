@@ -74,13 +74,53 @@ app.get("/all/:country/:city", limiter, ({ params }, res) => {
                 hour[5].temp_c) /
               6
             ).toFixed(1);
+
+            let temp_c_2 = (
+              (hour[6].temp_c +
+                hour[7].temp_c +
+                hour[8].temp_c +
+                hour[9].temp_c +
+                hour[10].temp_c +
+                hour[11].temp_c) /
+              6
+            ).toFixed(1);
+
+            let temp_c_3 = (
+              (hour[12].temp_c +
+                hour[13].temp_c +
+                hour[14].temp_c +
+                hour[15].temp_c +
+                hour[16].temp_c +
+                hour[17].temp_c) /
+              6
+            ).toFixed(1);
+
+            let temp_c_4 = (
+              (hour[18].temp_c +
+                hour[19].temp_c +
+                hour[20].temp_c +
+                hour[21].temp_c +
+                hour[22].temp_c +
+                hour[23].temp_c) /
+              6
+            ).toFixed(1);
+
             let temp_f_1 = ((9 / 5) * temp_c_1 + 32).toFixed(1);
+            let temp_f_2 = ((9 / 5) * temp_c_2 + 32).toFixed(1);
+            let temp_f_3 = ((9 / 5) * temp_c_3 + 32).toFixed(1);
+            let temp_f_4 = ((9 / 5) * temp_c_4 + 32).toFixed(1);
 
             res.render("index", {
               city: name,
               country: country,
-              temp_c: temp_c_1,
-              temp_f: temp_f_1,
+              temp_c_1: temp_c_1,
+              temp_f_1: temp_f_1,
+              temp_c_2: temp_c_2,
+              temp_f_2: temp_f_2,
+              temp_c_3: temp_c_3,
+              temp_f_3: temp_f_3,
+              temp_c_4: temp_c_4,
+              temp_f_4: temp_f_4,
             });
           } else {
             res.render("bad", {
@@ -109,6 +149,36 @@ app.get("/all/:country/:city", limiter, ({ params }, res) => {
       6
     ).toFixed(1);
 
+    let temp_c_2 = (
+      (gottem["forecast"]["forecastday"][0]["hour"][6].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][7].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][8].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][9].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][10].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][11].temp_c) /
+      6
+    ).toFixed(1);
+
+    let temp_c_3 = (
+      (gottem["forecast"]["forecastday"][0]["hour"][12].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][13].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][14].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][15].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][16].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][17].temp_c) /
+      6
+    ).toFixed(1);
+
+    let temp_c_4 = (
+      (gottem["forecast"]["forecastday"][0]["hour"][18].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][19].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][20].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][21].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][22].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][23].temp_c) /
+      6
+    ).toFixed(1);
+
     // let hour = gottem["forecast"]["forecastday"][0];
     // let temp_c_1 = (
     //   (hour[0].temp_c +
@@ -121,16 +191,25 @@ app.get("/all/:country/:city", limiter, ({ params }, res) => {
     // ).toFixed(1);
 
     let temp_f_1 = ((9 / 5) * temp_c_1 + 32).toFixed(1);
+    let temp_f_2 = ((9 / 5) * temp_c_2 + 32).toFixed(1);
+    let temp_f_3 = ((9 / 5) * temp_c_3 + 32).toFixed(1);
+    let temp_f_4 = ((9 / 5) * temp_c_4 + 32).toFixed(1);
 
     res.render("index", {
       city: gottem.location.name,
       country: gottem.location.country,
-      temp_c: temp_c_1,
-      temp_f: temp_f_1,
+      temp_c_1: temp_c_1,
+      temp_f_1: temp_f_1,
+      temp_c_2: temp_c_2,
+      temp_f_2: temp_f_2,
+      temp_c_3: temp_c_3,
+      temp_f_3: temp_f_3,
+      temp_c_4: temp_c_4,
+      temp_f_4: temp_f_4,
     });
   }
 });
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => console.log(`Server starting at port ${PORT}`));
 
