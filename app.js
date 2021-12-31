@@ -25,9 +25,11 @@ app.set("view engine", "ejs");
 
 app.get("/all/:country/:city", limiter, ({ params }, res) => {
   const { country, city } = params;
+  const curerentDate = "2021-12-29";
   // console.log(country, city);
   var data = fs.readFileSync("data.json");
-  const url_api = `http://api.weatherapi.com/v1/current.json?key=e6a73467a3e94aa184c122435212812&q=${city}&aqi=no`;
+  // const url_api = `http://api.weatherapi.com/v1/current.json?key=e6a73467a3e94aa184c122435212812&q=${city}&aqi=no`;
+  const url_api = `https://api.weatherapi.com/v1/history.json?key=e6a73467a3e94aa184c122435212812&q=${country}&q=${city}&dt=${curerentDate}&aqi=yes`;
 
   var jsonRead = JSON.parse(data);
   let flag = true;
@@ -36,7 +38,7 @@ app.get("/all/:country/:city", limiter, ({ params }, res) => {
   for (let i = 0; i < jsonRead.length; i++) {
     const q = jsonRead[i]["location"]["name"].toLocaleLowerCase();
     if (q == city) {
-      var object = jsonRead[i];
+      // var object = jsonRead[i];
       console.log("Fetch from json file");
       flag = !flag;
       gottem = jsonRead[i];
@@ -45,7 +47,7 @@ app.get("/all/:country/:city", limiter, ({ params }, res) => {
   }
 
   if (flag) {
-    console.log("Fetch from API");
+    console.log("Trying to fetch from API");
     axios
       .get(url_api)
       .then((response) => {
@@ -59,15 +61,26 @@ app.get("/all/:country/:city", limiter, ({ params }, res) => {
           jsonRead.push(object);
           var newData2 = JSON.stringify(jsonRead);
           fs.writeFileSync("data.json", newData2);
-          const { location, current } = object;
-          if (
-            country.toLocaleLowerCase() == location.country.toLocaleLowerCase()
-          ) {
+
+          const { name, country } = object.location;
+          const { hour } = object.forecast.forecastday[0];
+          if (country.toLocaleLowerCase() == country.toLocaleLowerCase()) {
+            let temp_c_1 = (
+              (hour[0].temp_c +
+                hour[1].temp_c +
+                hour[2].temp_c +
+                hour[3].temp_c +
+                hour[4].temp_c +
+                hour[5].temp_c) /
+              6
+            ).toFixed(1);
+            let temp_f_1 = ((9 / 5) * temp_c_1 + 32).toFixed(1);
+
             res.render("index", {
-              city: location.name,
-              country: location.country,
-              temp_c: current.temp_c,
-              temp_f: current.temp_f,
+              city: name,
+              country: country,
+              temp_c: temp_c_1,
+              temp_f: temp_f_1,
             });
           } else {
             res.render("bad", {
@@ -84,11 +97,36 @@ app.get("/all/:country/:city", limiter, ({ params }, res) => {
         }
       });
   } else {
+    // console.log(gottem);
+
+    let temp_c_1 = (
+      (gottem["forecast"]["forecastday"][0]["hour"][0].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][1].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][2].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][3].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][4].temp_c +
+        gottem["forecast"]["forecastday"][0]["hour"][5].temp_c) /
+      6
+    ).toFixed(1);
+
+    // let hour = gottem["forecast"]["forecastday"][0];
+    // let temp_c_1 = (
+    //   (hour[0].temp_c +
+    //     hour[1].temp_c +
+    //     hour[2].temp_c +
+    //     hour[3].temp_c +
+    //     hour[4].temp_c +
+    //     hour[5].temp_c) /
+    //   6
+    // ).toFixed(1);
+
+    let temp_f_1 = ((9 / 5) * temp_c_1 + 32).toFixed(1);
+
     res.render("index", {
-      city: gottem["location"]["name"],
-      country: gottem["location"]["country"],
-      temp_c: gottem["current"]["temp_c"],
-      temp_f: gottem["current"]["temp_f"],
+      city: gottem.location.name,
+      country: gottem.location.country,
+      temp_c: temp_c_1,
+      temp_f: temp_f_1,
     });
   }
 });
