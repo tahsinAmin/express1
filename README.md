@@ -7,7 +7,7 @@
 - [x] 5. Showing temperature and topggle from C to f and vice versa
 - [x] 6. Using of deconstructor
 - [x] 7. Rate Limiter
-- [x] 8. Write in json file if object not present
+- [x] 8. Write in json file if oject not present
 - [x] 9. Show Data from json file if present
 - [x] 10. Showing a page with an error meesage If no city found with that name
 - [x] 11. Using Historical data to show in page
