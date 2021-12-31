@@ -13,19 +13,12 @@
 - [x] 11. (Historical Data) Able to show 1 average data and show the same value in everywhere
 - [x] 12. (Historical Data) Able to show 4 average data
 - [x] 13. (Historical Data) find the higest & the lowest temp and show it
+- [x] 14. Adding the code under previous project
 
 # Optimization
 
 - [ ] 404 Page betterment
 - [ ] Put the whole project here.
-
-# Tools Used
-
-- EJS (HTML template)
-- NodeJS
-- ExpressJS
-- Javascript
-- TailwindCSS(CSS framework)
 
 # Things that I've learned
 
@@ -37,15 +30,25 @@
 # Removing bad practices
 
 - Remove "if (object == undefined) {"
-- remove the variable name
+- remove the variable name, 'gottem'
 - whether we have our data in the json file or get it from api, before sending i to html, we have to do the weather calculation. So, wee need to put the code calculation on both of their blocks. Is their an alternatove way to it? (Function call)
 - Remove truncate class from index
 
 # Problem
 
+- Bad Request page appears in home PC but not in Office PC (Task: we will
+  display 403 HTTP Forbidden server responses)
 - My duplicate hotkeys don't work
 
 # Late Submission Reason
 
 - Implementing Programming Move
 - Code not work in office but works home
+
+# Tools Used
+
+- EJS (HTML template)
+- TailwindCSS(CSS framework)
+- Javascript
+- NodeJS
+- ExpressJS

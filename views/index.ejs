@@ -5,6 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="hotel-datepicker-4.0.3/dist/css/hotel-datepicker.css"
+      rel="stylesheet"
+    />
+    <!-- Optional -->
+    <script src="fecha-master/dist/fecha.min.js"></script>
+    <script src="hotel-datepicker-4.0.3/dist/js/hotel-datepicker.min.js"></script>
     <style>
       /* switch slider start */
       .switch {
@@ -57,6 +71,7 @@
         -ms-transform: translateX(26px);
         transform: translateX(26px);
       }
+
       /* Rounded sliders */
       .slider.round {
         border-radius: 34px;
@@ -66,208 +81,1430 @@
         border-radius: 50%;
       }
       /* switch slider end */
+      .search_wrap .search-input {
+        position: relative;
+        width: 100%;
+      }
+
+      .search-input input {
+        width: 100%;
+        outline: none;
+        border: none;
+      }
+
+      .search-input .icon {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #00cd92;
+        cursor: pointer;
+      }
+
+      .search-input .autocom-box {
+        padding: 0;
+        max-height: 290px;
+        overflow-y: auto;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .search-input.active .autocom-box {
+        padding: 10px 8px;
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .autocom-box li {
+        list-style: none;
+        padding: 8px 12px;
+        width: 100%;
+        border-radius: 3px;
+        display: none;
+      }
+
+      .search-input.active .autocom-box li {
+        display: block;
+      }
+
+      .autocom-box li:hover {
+        background: #efefef;
+        cursor: pointer;
+      }
     </style>
     <title>Weather</title>
   </head>
-  <body class="container mx-auto">
-    <div class="my-12 px-4 sm:px-0">
-      <div class="flex justify-between items-center">
-        <div>
-          <header class="font-medium text-xl sm:text-2xl text-blue-900">
-            Weather in <%= city%>, <%= country%>
-          </header>
-          <p class="text-gray-600 font-medium mt-4">
-            View the weather forecast for <%= city%> before booking your <%=
-            city%> vacation rental to confirm your best time to go.
+  <body class="mx-auto">
+    <nav
+      class="bg-blue-900 text-white flex justify-between items-center px-4 py-4"
+    >
+      <div class="logo">
+        <img
+          class="max-w-full nav-row-logo"
+          loading="lazy"
+          src="/img/header_logo.svg"
+          alt="rentByOwner"
+          width="182"
+          height="26"
+        />
+      </div>
+      <div class="others hidden sm:block flex space-x-4">
+        <a href="" class="tracking-wider font-regular text-lg"
+          >Rentals
+          <i class="fas fa-chevron-down"></i>
+        </a>
+        <a href="" class="tracking-wider font-regular text-lg"
+          >Nearby <i class="fas fa-chevron-down"></i
+        ></a>
+        <a href="" class="tracking-wider font-regular text-lg"
+          >Destinations <i class="fas fa-chevron-down"></i
+        ></a>
+        <button
+          class="
+            bg-[#00CD92]
+            py-3
+            p-4
+            rounded-xl
+            font-regular
+            text-white text-lg
+          "
+        >
+          Find a Vacation Rental
+        </button>
+      </div>
+      <svg
+        class="block h-6 w-6 sm:hidden"
+        xmlns="https:www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M4
+        6h16M4 12h16M4 18h16"
+        />
+      </svg>
+    </nav>
+    <main class="max-w-7xl mx-auto">
+      <div
+        class="
+          hero
+          flex
+          mt-2
+          mx-4
+          sm:mx-0
+          h-[645px]
+          bg-[url('/img/hero.jpg')] bg-cover bg-center
+        "
+      >
+        <div class="m-auto">
+          <h3 class="text-2xl font-normal mb-4">JOURNEYS</h3>
+          <h1 class="text-4xl sm:text-5xl font-medium mb-4">
+            Stories From Around The World
+          </h1>
+          <form class="m-auto" action="">
+            <div
+              class="
+                mx-auto
+                flex flex-col
+                sm:flex-row
+                space-y-1
+                sm:space-y-0 sm:space-x-2
+              "
+            >
+              <!-- Search -->
+              <div
+                class="
+                  search_wrap
+                  p-2
+                  sm:px-2
+                  w-full
+                  mx-auto
+                  sm:max-w-[320px]
+                  flex
+                  items-center
+                  bg-white
+                "
+              >
+                <div class="search-input">
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    id="search_val"
+                    required
+                  />
+                  <div class="autocom-box truncate"></div>
+                  <div class="icon"><i class="fas fa-search"></i></div>
+                </div>
+              </div>
+
+              <!-- Date -->
+              <div class="flex bg-white items-center">
+                <svg
+                  class="w-6 h-6 text-[#00CD92] pl-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  ></path>
+                </svg>
+                <input
+                  id="input-id"
+                  type="text"
+                  class="border-2 p-2"
+                  placeholder="Checkin > Checkout"
+                  required
+                />
+              </div>
+
+              <!-- Guests -->
+              <div
+                class="guests_add bg-white px-2 flex items-center"
+                onclick="popup_guest()"
+              >
+                <svg
+                  class="w-6 h-6 bg-white text-[#00CD92] pl-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                  ></path>
+                </svg>
+                <input
+                  type="number"
+                  class="text-black w-[70px] pl-2 p-2 sm:px-2"
+                  placeholder="Guests"
+                  value=""
+                  disabled=""
+                  id="guest_val"
+                />
+                <i class="fas fa-sort-down text-gray-400 bg-white pb-1"></i>
+              </div>
+
+              <!-- Price Range -->
+              <div
+                class="price_range_add bg-white px-2 flex items-center"
+                onclick="popup_range()"
+              >
+                <input
+                  type="text"
+                  class="text-black pl-2 p-2 sm:px-2"
+                  placeholder="Price Range"
+                  value=""
+                  disabled=""
+                  id="price_val"
+                />
+                <i class="fas fa-sort-down text-gray-400 bg-white pb-1"></i>
+              </div>
+
+              <input
+                type="submit"
+                value="Search"
+                class="
+                  bg-[#00cd92]
+                  text-white
+                  rounded-lg
+                  cursor-pointer
+                  border
+                  py-2
+                  px-4
+                  text-xl
+                  font-light
+                  hover:transform hover:scale-105
+                "
+                onclick="show_alert()"
+              />
+            </div>
+          </form>
+
+          <!-- Guests Pop Up-->
+          <div
+            class="pop_up_guest hidden flex flex-col bg-white p-4"
+            id="set_guest_num"
+          >
+            <div class="flex items-center space-x-3">
+              <p class="text-3xl">Guests</p>
+              <button
+                class="
+                  px-5
+                  py-2
+                  text-center
+                  rounded-full
+                  border-2 border-[#00CD92]
+                  text-[#00CD92] text-3xl
+                  font-black
+                  focus:ring focus:ring-[#00CD92]
+                  hover:bg-[#00CD92] hover:text-white
+                "
+                onclick="decrement()"
+              >
+                -
+              </button>
+              <p id="guest_size" class="text-3xl">0</p>
+              <button
+                class="
+                  px-4
+                  py-2
+                  text-center
+                  rounded-full
+                  border-2 border-[#00CD92]
+                  text-[#00CD92] text-3xl
+                  font-black
+                  focus:ring focus:ring-[#00CD92]
+                  hover:bg-[#00CD92] hover:text-white
+                "
+                onclick="increment()"
+              >
+                +
+              </button>
+            </div>
+            <div class="add_buttton flex justify-end">
+              <button
+                class="
+                  bg-[#00CD92]
+                  text-white
+                  uppercase
+                  shadow-lg
+                  py-3
+                  px-6
+                  rounded-lg
+                "
+                onclick="on_add_guest()"
+              >
+                ADD
+              </button>
+            </div>
+          </div>
+
+          <!-- Price Pop Up -->
+          <div
+            class="pop_up_price_range hidden wrapper flex flex-col bg-white p-4"
+            id="set_price_num"
+          >
+            <div>
+              <p class="text-xl font-semibold mb-4 text-[#00CD92]">
+                <span class="text-gray-600">Price Range: </span> ৳
+                <span class="font-medium" id="show_range_val_1"> 0 </span>
+                <span> &dash; </span>
+                ৳
+                <span class="font-medium" id="show_range_val_2">128749</span>
+                + per night
+              </p>
+              <div class="cont">
+                <div class="slider-track bg-blue-300"></div>
+                <div class="flex space-x-1">
+                  <span>Min Value: </span>
+                  <input
+                    type="range"
+                    min="0"
+                    max="128749"
+                    value="0"
+                    id="slider-1"
+                    oninput="slideOne()"
+                  />
+                  <span id="range1"> 0 </span>
+                </div>
+
+                <div class="flex space-x-1">
+                  <span>Max Value: </span>
+                  <input
+                    type="range"
+                    min="0"
+                    max="128749"
+                    value="128749"
+                    id="slider-2"
+                    oninput="slideTwo()"
+                  />
+                  <span id="range2"> 128749 </span>
+                </div>
+              </div>
+            </div>
+            <div class="add_buttton flex justify-end">
+              <button
+                class="
+                  bg-[#00CD92]
+                  text-white
+                  uppercase
+                  shadow-lg
+                  py-3
+                  px-6
+                  rounded-lg
+                "
+                onclick="on_add_price()"
+              >
+                ADD
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 sm:flex sm:space-x-6 px-4 sm:px-0">
+        <div
+          class="
+            my-8
+            sm:my-0 sm:w-3/12
+            flex flex-col
+            justify-between
+            text-white
+            font-medium
+            bg-[url('/img/sedona.jpg')] bg-cover bg-center
+            p-4
+            h-60
+            sm:h-72
+            rounded-lg
+          "
+        >
+          <p class="text-3xl" style="text-shadow: 1px 1px #000">
+            The Best Sedona Hiking Trails
           </p>
+          <small class="text-md">By Staff Writer</small>
         </div>
-        <div class="toggle flex items-center space-x-2 text-gray-600 text-2xl">
-          <div class="letter-toggle">°C</div>
-          <label class="switch">
-            <input
-              type="checkbox"
-              id="toggle-weather"
-              onclick="toggle_weather()"
-            />
-            <span class="slider round bg-blue-900"></span>
-          </label>
-          <div class="letter-toggle opacity-30">F</div>
+        <div
+          class="
+            my-8
+            sm:my-0 sm:w-6/12
+            flex flex-col
+            justify-between
+            text-white
+            font-medium
+            bg-gray-300 bg-[url('/img/tybee.jpg')] bg-cover bg-center
+            p-4
+            h-60
+            sm:h-72
+            rounded-lg
+          "
+        >
+          <p class="text-3xl" style="text-shadow: 1px 1px #000">
+            Tybee Island Fun Things To Do While On Vacation
+          </p>
+          <small class="text-md">By Staff Writer</small>
+        </div>
+        <div
+          class="
+            rounded-lg
+            my-8
+            sm:my-0 sm:w-3/12
+            bg-blue-900
+            p-4
+            flex flex-col
+            justify-between
+            font-medium
+            h-44
+            sm:h-72
+          "
+        >
+          <p class="text-[#00CD92] text-3xl font-semibold">
+            The night life and the food.
+          </p>
+          <small class="text-md font-black text-[#00CD92] underline"
+            >Explore Liberia</small
+          >
         </div>
       </div>
-      <div class="mt-6 grid grid-cols-1 sm:grid-cols-4 gap-4 drop-shadow-xl">
+      <div class="mt-4 sm:flex sm:space-x-6">
         <div
           class="
-            rounded-lg
-            sm:h-auto
-            bg-white
-            text-black text-2xl
-            font-light
-            p-4
-            hover:scale-105
-            transform
-            transition
-            duration-300
-            ease-out
-            flex flex-col
-            space-y-2
+            mb-4
+            sm:mb-0 sm:w-9/12 sm:flex sm:flex-col
+            space-y-16
+            sm:space-y-4
           "
         >
-          <div class="flex justify-left">
-            <img src="/img/weather/cloud.JPG" alt="" />
-          </div>
-          <div>
-            <p class="font-medium text-black">December - February</p>
-            <div class="flex font-normal text-gray-600 space-x-4 weather_tog">
-              <span>High <%= temp_c_1_max %>°C</span>
-              <span>Low <%= temp_c_1_min %>°C</span>
-            </div>
+          <div
+            class="
+              sm:flex sm:space-x-6
+              mb-4
+              rounded-lg
+              transform
+              transition
+              hover:scale-105
+              duration-200
+              ease-out
+              pr-6
+            "
+          >
             <div
               class="
+                img
+                w-10/12
+                mx-auto
+                sm:w-4/12
+                h-56
+                sm:h-64
                 flex
-                hidden
-                font-normal
-                text-gray-600
-                space-x-4
-                weather_tog
+                items-center
+                justify-center
+                bg-blue-900
+                rounded-xl
               "
             >
-              <span>High <%= temp_f_1_max %>F</span>
-              <span>Low <%= temp_f_1_min %>F</span>
+              <img
+                class="w-4/5"
+                loading="lazy"
+                src="/img/header_logo.svg"
+                alt="rentByOwner"
+                width="182"
+                height="26"
+              />
             </div>
+            <div
+              class="content w-10/12 sm:w-8/12 mx-auto flex flex-col space-y-6"
+            >
+              <header
+                class="
+                  text-2xl
+                  mt-4
+                  sm:mt-0 sm:text-5xl
+                  font-medium
+                  text-blue-900
+                "
+              >
+                The Best Beach Towns in Florida you Need to visit
+              </header>
+              <p class="text-gray-500">
+                Written by
+                <span class="underline text-blue-900">staff writer</span>
+              </p>
+              <p class="text-gray-500 hidden sm:block">
+                Let's start with the big picture.Planning a trip top flotrrida?>
+                Here are the best branches wherer you shoulkd spn\end the week
+                (or the month) on the beach with your...
+              </p>
+            </div>
+          </div>
+          <div
+            class="
+              sm:flex sm:space-x-6
+              mb-4
+              rounded-lg
+              transform
+              transition
+              hover:scale-105
+              duration-200
+              ease-out
+              pr-6
+            "
+          >
+            <div
+              class="
+                img
+                w-10/12
+                mx-auto
+                sm:w-4/12
+                h-56
+                sm:h-64
+                flex
+                items-center
+                justify-center
+                rounded-xl
+                bg-[url('/img/sarasota.jpg')] bg-cover bg-center
+              "
+            ></div>
+            <div
+              class="content w-10/12 sm:w-8/12 mx-auto flex flex-col space-y-6"
+            >
+              <header
+                class="
+                  text-2xl
+                  mt-4
+                  sm:mt-0 sm:text-5xl
+                  font-medium
+                  text-blue-900
+                "
+              >
+                The Best Sarasota Area Beaches To Explore
+              </header>
+              <p class="text-gray-500">
+                Written by
+                <span class="underline text-blue-900">staff writer</span>
+              </p>
+              <p class="text-gray-500 hidden sm:block">
+                Sarasota County has some of the best beaches in all florida and
+                the gulf of Mexico. So, whther you're looking for a more
+                chilled-out white sand beach to do...
+              </p>
+            </div>
+          </div>
+          <div
+            class="
+              pagination
+              flex
+              space-x-3
+              font-medium
+              text-sm
+              px-4
+              sm:px-0
+              mt-16
+            "
+          >
+            <div class="active border bg-blue-900 text-white px-3 py-1">1</div>
+            <div class="border text-blue-900 px-3 py-1">2</div>
+            <div class="border text-blue-900 px-3 py-1">...</div>
+            <div class="border text-blue-900 px-3 py-1">38</div>
+            <div class="border text-blue-900 px-2 py-1">LAST</div>
+          </div>
+          <div
+            class="
+              typeeIs
+              py-4
+              pr-4
+              pl-4
+              bg-blue-900
+              flex
+              justify-between
+              mx-4
+              sm:mx-0
+            "
+          >
+            <div class="flex flex-col justify-between space-x-6 space-y-16">
+              <div class="flex p-1 sm:p-4">
+                <i
+                  class="fas fa-quote-left text-blue-400 h-10 w-4 scale-105"
+                ></i>
+                <header class="text-[#00CD92] text-3xl sm:text-4xl font-medium">
+                  San Diego is a city that delivers a good time.
+                </header>
+              </div>
+              <a
+                href="#"
+                class="
+                  things_to_do
+                  text-[#00CD92]
+                  underline
+                  text-2xl
+                  pb-2
+                  sm:pb-0
+                "
+              >
+                Things To Do in San Diego
+              </a>
+            </div>
+            <div class="flex flex-col justify-end">
+              <svg
+                class="w-8 h-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <aside
+          class="
+            mb-4
+            mt-10
+            sm:mt-0 sm:mb-0 sm:w-3/12
+            flex flex-col
+            space-y-3
+            pl-0
+            text-xl
+            sm:pl-2
+            mx-5
+            sm:mx-0
+          "
+        >
+          <header class="font-light uppercase">catagories</header>
+          <ul class="flex flex-col space-y-2">
+            <li class="text-[#00CD92] flex justify-between">
+              <p>Alabama</p>
+
+              <svg
+                class="w-6 h-6 text-[#00CD92]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"
+                ></path>
+              </svg>
+            </li>
+            <li class="text-[#00CD92] flex justify-between">
+              <p>Arizona</p>
+              <svg
+                class="w-6 h-6 text-[#00CD92]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"
+                ></path>
+              </svg>
+            </li>
+            <li class="text-[#00CD92] flex justify-between">
+              <p>Beaches</p>
+              <svg
+                class="w-6 h-6 text-[#00CD92]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"
+                ></path>
+              </svg>
+            </li>
+            <li class="text-[#00CD92] flex justify-between">
+              <p>California</p>
+              <svg
+                class="w-6 h-6 text-[#00CD92]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"
+                ></path>
+              </svg>
+            </li>
+            <li class="text-[#00CD92] flex justify-between">
+              <p>Florida</p>
+              <svg
+                class="w-6 h-6 text-[#00CD92]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"
+                ></path>
+              </svg>
+            </li>
+            <li class="text-[#00CD92] flex justify-between">
+              <p>Georgia</p>
+              <svg
+                class="w-6 h-6 text-[#00CD92]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"
+                ></path>
+              </svg>
+            </li>
+            <li class="text-[#00CD92] flex justify-between">
+              <p>Hawaii</p>
+              <svg
+                class="w-6 h-6 text-[#00CD92]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"
+                ></path>
+              </svg>
+            </li>
+            <li class="text-[#00CD92]">
+              <p>Hiking</p>
+            </li>
+            <li class="text-[#00CD92] flex justify-between">
+              <p>Maine</p>
+              <svg
+                class="w-6 h-6 text-[#00CD92]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"
+                ></path>
+              </svg>
+            </li>
+            <li class="text-[#00CD92] flex justify-between">
+              <p>Maryland</p>
+              <svg
+                class="w-6 h-6 text-[#00CD92]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"
+                ></path>
+              </svg>
+            </li>
+            <li class="text-[#00CD92] flex justify-between">
+              <p>Massachusetts</p>
+              <svg
+                class="w-6 h-6 text-[#00CD92]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"
+                ></path>
+              </svg>
+            </li>
+            <li class="text-[#00CD92]">
+              <p>Museums</p>
+            </li>
+            <li class="text-[#00CD92] flex justify-between">
+              <p>Oregon</p>
+              <svg
+                class="w-6 h-6 text-[#00CD92]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"
+                ></path>
+              </svg>
+            </li>
+            <li class="text-[#00CD92]">
+              <p>Parks</p>
+            </li>
+            <li class="text-[#00CD92]">
+              <p>Place To Stay</p>
+            </li>
+            <li class="text-[#00CD92]">
+              <p>Restaurants</p>
+            </li>
+            <li class="text-[#00CD92] flex justify-between">
+              <p>South Carolina</p>
+              <svg
+                class="w-6 h-6 text-[#00CD92]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"
+                ></path>
+              </svg>
+            </li>
+            <li class="text-[#00CD92] flex justify-between">
+              <p>Tennessee</p>
+              <svg
+                class="w-6 h-6 text-[#00CD92]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"
+                ></path>
+              </svg>
+            </li>
+            <li class="text-[#00CD92] flex justify-between">
+              <p>Texas</p>
+              <svg
+                class="w-6 h-6 text-[#00CD92]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 0 110-18 9 9 0 010 18z"
+                ></path>
+              </svg>
+            </li>
+            <li class="text-[#00CD92]">
+              <p>Things To do</p>
+            </li>
+            <li class="text-[#00CD92]">
+              <p>Tours</p>
+            </li>
+            <li class="text-[#00CD92]">
+              <p>Uncategorized</p>
+            </li>
+          </ul>
+        </aside>
+      </div>
+      <div class="mt-12 px-4 sm:px-0">
+        <header class="font-medium text-xl sm:text-2xl text-gray-800">
+          Follow The Adventures
+        </header>
+        <div
+          class="
+            mt-6
+            grid grid-cols-1
+            sm:grid-rows-2 sm:grid-flow-col sm:grid-cols-2
+            gap-4
+          "
+        >
+          <div
+            class="
+              sm:row-span-2 sm:col-span-1
+              h-96
+              sm:h-auto
+              bg-gray-300 bg-[url('/img/india2.jpg')] bg-cover bg-center
+              text-white text-2xl
+              font-light
+              p-6
+              hover:scale-105
+              transform
+              transition
+              duration-300
+              ease-out
+            "
+          >
+            India
+          </div>
+          <div
+            class="
+              sm:row-span-1 sm:col-span-2
+              h-96
+              sm:h-auto
+              bg-gray-300 bg-[url('/img/lioncity.jpg')] bg-cover bg-center
+              text-white text-2xl
+              font-light
+              p-6
+              hover:scale-105
+              transform
+              transition
+              duration-300
+              ease-out
+            "
+          >
+            Singapore
+          </div>
+          <div
+            class="
+              sm:row-span-1 sm:col-span-1
+              h-96
+              sm:h-auto sm:w-auto
+              bg-gray-300 bg-[url('/img/indiagate.jpg')] bg-cover bg-center
+              text-white text-2xl
+              font-light
+              p-6
+              hover:scale-105
+              transform
+              transition
+              duration-300
+              ease-out
+            "
+          >
+            Pakistan
+          </div>
+          <div
+            class="
+              row-span-1
+              col-span-1
+              h-96
+              sm:h-auto sm:w-auto
+              bg-gray-300 bg-[url('/img/china1.jpg')] bg-cover bg-left
+              text-white text-2xl
+              font-light
+              p-6
+              hover:scale-105
+              transform
+              transition
+              duration-300
+              ease-out
+            "
+          >
+            China
           </div>
         </div>
         <div
           class="
-            rounded-lg
-            sm:h-auto
-            bg-white
-            text-black text-2xl
-            font-light
-            p-4
-            hover:scale-105
-            transform
-            transition
-            duration-300
-            ease-out
-            flex flex-col
-            space-y-2
+            follow_us
+            text-[#00CD92]
+            my-8
+            text-lg text-center
+            sm:text-right
+            font-medium
           "
         >
-          <div class="flex justify-left">
-            <img src="/img/weather/snow.JPG" alt="" />
-          </div>
+          FOLLOW US ON INSTAGRAM
+        </div>
+      </div>
+      <div class="my-12 px-4 sm:px-0">
+        <div class="flex justify-between items-center">
           <div>
-            <p class="font-medium text-black">March - May</p>
-            <div class="flex font-normal text-gray-600 space-x-4 weather_tog">
-              <span>High <%= temp_c_2_max %>°C</span>
-              <span>Low <%= temp_c_2_min %>°C</span>
-            </div>
-            <div
-              class="
-                flex
-                hidden
-                font-normal
-                text-gray-600
-                space-x-4
-                weather_tog
-              "
-            >
-              <span>High <%= temp_f_2_max %>F</span>
-              <span>Low <%= temp_f_2_min %>F</span>
-            </div>
+            <header class="font-medium text-xl sm:text-2xl text-blue-900">
+              Weather in <%= city%>, <%= country%>
+            </header>
+            <p class="text-gray-600 font-medium mt-4">
+              View the weather forecast for <%= city%> before booking your <%=
+              city%> vacation rental to confirm your best time to go.
+            </p>
+          </div>
+          <div
+            class="toggle flex items-center space-x-2 text-gray-600 text-2xl"
+          >
+            <div class="letter-toggle">°C</div>
+            <label class="switch">
+              <input
+                type="checkbox"
+                id="toggle-weather"
+                onclick="toggle_weather()"
+              />
+              <span class="slider round bg-blue-900"></span>
+            </label>
+            <div class="letter-toggle opacity-30">F</div>
           </div>
         </div>
-        <div
-          class="
-            rounded-lg
-            sm:h-auto
-            bg-white
-            text-black text-2xl
-            font-light
-            p-4
-            hover:scale-105
-            transform
-            transition
-            duration-300
-            ease-out
-            flex flex-col
-            space-y-2
-          "
-        >
-          <div class="flex justify-left">
-            <img src="/img/weather/sunny.JPG" alt="" />
-          </div>
-          <div>
-            <p class="font-medium text-black">June - August</p>
-            <div class="flex font-normal text-gray-600 space-x-4 weather_tog">
-              <span>High <%= temp_c_3_max %>°C</span>
-              <span>Low <%= temp_c_3_min %>°C</span>
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-4 gap-4 drop-shadow-xl">
+          <div
+            class="
+              rounded-lg
+              sm:h-auto
+              bg-white
+              text-black text-2xl
+              font-light
+              p-4
+              hover:scale-105
+              transform
+              transition
+              duration-300
+              ease-out
+              flex flex-col
+              space-y-2
+            "
+          >
+            <div class="flex justify-left">
+              <img src="/img/weather/cloud.JPG" alt="" />
             </div>
-            <div
-              class="
-                flex
-                hidden
-                font-normal
-                text-gray-600
-                space-x-4
-                weather_tog
-              "
-            >
-              <span>High <%= temp_f_3_max %>F</span>
-              <span>Low <%= temp_f_3_min %>F</span>
+            <div>
+              <p class="font-medium text-black">December - February</p>
+              <div class="flex font-normal text-gray-600 space-x-4 weather_tog">
+                <span>High <%= temp_c_1_max %>°C</span>
+                <span>Low <%= temp_c_1_min %>°C</span>
+              </div>
+              <div
+                class="
+                  flex
+                  hidden
+                  font-normal
+                  text-gray-600
+                  space-x-4
+                  weather_tog
+                "
+              >
+                <span>High <%= temp_f_1_max %>F</span>
+                <span>Low <%= temp_f_1_min %>F</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div
-          class="
-            rounded-lg
-            sm:h-auto
-            bg-white
-            text-black text-2xl
-            font-light
-            p-4
-            hover:scale-105
-            transform
-            transition
-            duration-300
-            ease-out
-            flex flex-col
-            space-y-2
-          "
-        >
-          <div class="flex justify-left">
-            <img src="/img/weather/rainy.JPG" alt="" />
-          </div>
-          <div>
-            <p class="font-medium text-black">September - November</p>
-            <div class="flex font-normal text-gray-600 space-x-4 weather_tog">
-              <span>High <%= temp_c_4_max %>°C</span>
-              <span>Low <%= temp_c_4_min %>°C</span>
+          <div
+            class="
+              rounded-lg
+              sm:h-auto
+              bg-white
+              text-black text-2xl
+              font-light
+              p-4
+              hover:scale-105
+              transform
+              transition
+              duration-300
+              ease-out
+              flex flex-col
+              space-y-2
+            "
+          >
+            <div class="flex justify-left">
+              <img src="/img/weather/snow.JPG" alt="" />
             </div>
-            <div
-              class="
-                flex
-                hidden
-                font-normal
-                text-gray-600
-                space-x-4
-                weather_tog
-              "
-            >
-              <span>High <%= temp_f_4_max %>F</span>
-              <span>Low <%= temp_f_4_min %>F</span>
+            <div>
+              <p class="font-medium text-black">March - May</p>
+              <div class="flex font-normal text-gray-600 space-x-4 weather_tog">
+                <span>High <%= temp_c_2_max %>°C</span>
+                <span>Low <%= temp_c_2_min %>°C</span>
+              </div>
+              <div
+                class="
+                  flex
+                  hidden
+                  font-normal
+                  text-gray-600
+                  space-x-4
+                  weather_tog
+                "
+              >
+                <span>High <%= temp_f_2_max %>F</span>
+                <span>Low <%= temp_f_2_min %>F</span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="
+              rounded-lg
+              sm:h-auto
+              bg-white
+              text-black text-2xl
+              font-light
+              p-4
+              hover:scale-105
+              transform
+              transition
+              duration-300
+              ease-out
+              flex flex-col
+              space-y-2
+            "
+          >
+            <div class="flex justify-left">
+              <img src="/img/weather/sunny.JPG" alt="" />
+            </div>
+            <div>
+              <p class="font-medium text-black">June - August</p>
+              <div class="flex font-normal text-gray-600 space-x-4 weather_tog">
+                <span>High <%= temp_c_3_max %>°C</span>
+                <span>Low <%= temp_c_3_min %>°C</span>
+              </div>
+              <div
+                class="
+                  flex
+                  hidden
+                  font-normal
+                  text-gray-600
+                  space-x-4
+                  weather_tog
+                "
+              >
+                <span>High <%= temp_f_3_max %>F</span>
+                <span>Low <%= temp_f_3_min %>F</span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="
+              rounded-lg
+              sm:h-auto
+              bg-white
+              text-black text-2xl
+              font-light
+              p-4
+              hover:scale-105
+              transform
+              transition
+              duration-300
+              ease-out
+              flex flex-col
+              space-y-2
+            "
+          >
+            <div class="flex justify-left">
+              <img src="/img/weather/rainy.JPG" alt="" />
+            </div>
+            <div>
+              <p class="font-medium text-black">September - November</p>
+              <div class="flex font-normal text-gray-600 space-x-4 weather_tog">
+                <span>High <%= temp_c_4_max %>°C</span>
+                <span>Low <%= temp_c_4_min %>°C</span>
+              </div>
+              <div
+                class="
+                  flex
+                  hidden
+                  font-normal
+                  text-gray-600
+                  space-x-4
+                  weather_tog
+                "
+              >
+                <span>High <%= temp_f_4_max %>F</span>
+                <span>Low <%= temp_f_4_min %>F</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
+    <footer class="bg-indigo-100 px-4 pt-24 mt-4">
+      <div
+        class="
+          grid grid-cols-1
+          sm:grid-cols-4 sm:gap-x-56
+          gap-y-9
+          sm:w-8/12 sm:mx-auto
+          mb-2
+        "
+      >
+        <div
+          class="
+            find
+            col-span-2
+            text-center
+            sm:text-left
+            flex flex-col
+            sm:block
+            space-y-3
+          "
+        >
+          <header class="font-medium text-2xl">Find a Place to Stay</header>
+          <ul
+            class="
+              text-gray-600
+              font-regular
+              grid grid-cols-1
+              text-xl
+              sm:grid-cols-2
+              gap-x-44 gap-y-3
+            "
+          >
+            <li>All RBO Homes</li>
+            <li>Vacation rentals</li>
+            <li>Cabins</li>
+            <li>Condos</li>
+            <li>Cottages</li>
+            <li>Ski Chalets</li>
+            <li>Timeshares</li>
+            <li>RV Rentals</li>
+            <li>Boat Rentals</li>
+            <li>Villas</li>
+            <li>Hotels</li>
+            <li>Resorts</li>
+          </ul>
+        </div>
+        <div
+          class="
+            other_footer_items
+            col-span-2
+            grid grid-cols-1
+            sm:grid-cols-2 sm:gap-x-24
+            gap-y-9
+          "
+        >
+          <div
+            class="
+              about
+              text-center
+              sm:text-left
+              flex flex-col
+              sm:block
+              space-y-3
+            "
+          >
+            <header class="font-medium text-2xl">About Us</header>
+            <ul
+              class="
+                text-gray-600
+                font-regular
+                grid grid-cols-1
+                text-xl
+                gap-y-3
+              "
+            >
+              <li>About rent By Owner</li>
+              <li>Our Travel Journal</li>
+            </ul>
+          </div>
+          <div
+            class="
+              explore
+              text-center
+              sm:text-left
+              flex flex-col
+              sm:block
+              space-y-3
+            "
+          >
+            <header class="font-medium text-2xl">Explore</header>
+            <ul
+              class="
+                text-gray-600
+                font-regular
+                grid grid-cols-1
+                text-xl
+                gap-y-3
+              "
+            >
+              <li>My Profile</li>
+              <li>Site Map</li>
+            </ul>
+          </div>
+          <div
+            class="
+              support
+              text-center
+              sm:text-left
+              flex flex-col
+              sm:block
+              space-y-3
+            "
+          >
+            <header class="font-medium text-2xl">Support</header>
+            <ul
+              class="
+                text-gray-600
+                font-regular
+                grid grid-cols-1
+                text-xl
+                gap-y-3
+              "
+            >
+              <li>FAQs</li>
+              <li>List your Property</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="hidden sm:block border-b border-gray-300 w-full"></div>
+      <div
+        class="
+          sm:flex sm:justify-between
+          pt-2
+          sm:items-center
+          text-lg text-gray-800
+        "
+      >
+        <div class="flex flex-col sm:flex-row sm:space-x-64">
+          <div
+            class="
+              icons
+              flex
+              space-x-1
+              my-10
+              sm:my-0 sm:justify-left
+              justify-center
+            "
+          >
+            <div
+              class="
+                h-8
+                w-8
+                rounded-full
+                bg-blue-900
+                flex
+                justify-center
+                items-center
+              "
+            >
+              <i class="fab fa-facebook-square text-white"></i>
+            </div>
+            <div
+              class="
+                h-8
+                w-8
+                rounded-full
+                bg-blue-900
+                flex
+                justify-center
+                items-center
+              "
+            >
+              <i class="fab fa-instagram text-white"></i>
+            </div>
+            <div
+              class="
+                h-8
+                w-8
+                rounded-full
+                bg-blue-900
+                flex
+                justify-center
+                items-center
+              "
+            >
+              <i class="fab fa-twitter text-white"></i>
+            </div>
+          </div>
+          <ul
+            class="
+              privacy_n_site
+              text-center
+              flex
+              text-xl
+              justify-center
+              space-x-5
+              sm:pl-4
+            "
+          >
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Site Terms</a></li>
+          </ul>
+        </div>
+        <div class="sm:hidden border-b border-gray-300 w-full mt-3 mb-6"></div>
+        <div class="rights text-center text-xl pb-6">
+          @ 2021 Rent By Owner. all rights Reserved
+        </div>
+      </div>
+    </footer>
+
     <script>
       // Toggle Weather Start
       let toggleDivs = document.getElementsByClassName("weather_tog");
       let letterToggle = document.getElementsByClassName("letter-toggle");
       function tog() {
         for (let i = 0; i < toggleDivs.length; i++) {
-          letterToggle[i].classList.toggle("opacity-30");
+          letterToggle[i].classList.toggle("text-gray-600");
         }
       }
       function toggle_weather() {
@@ -277,6 +1514,157 @@
         tog();
       }
       // Toggle Weather End
+
+      // let weatherDataFound = () => {
+      //   flag = true;
+      //   if (false) {
+      //     alert("data found!");
+      //   } else {
+      //     alert("Sorry. The location's weather could not be found");
+      //   }
+      // };
+      // weatherDataFound();
+
+      // Search Section Start
+      const data = [
+        {
+          id: 62061,
+          Name: "Community of Madrid, Spain",
+          Count: 2,
+          SlashName: "Spain/Madrid-vacation-rentals/g556/",
+        },
+        {
+          id: 62253,
+          Name: "Madrid, Community of Madrid, Spain",
+          Count: 1,
+          SlashName: "Spain/Madrid/Madrid-vacation-rentals/g1688/",
+        },
+      ];
+      // Search Section End
+
+      // Slider start
+      let set_price_num = document.getElementById("set_price_num");
+
+      function on_add_price() {
+        let price_val = document.getElementById("price_val");
+        price_range = "৳" + sliderOne.value + " - ৳" + sliderTwo.value;
+        price_val.value = price_range;
+        set_price_num.classList.toggle("hidden");
+      }
+
+      function popup_range() {
+        set_price_num.classList.toggle("hidden");
+        set_guest_num.classList.add("hidden");
+      }
+
+      let selector = document.getElementById("selector");
+      let selectValue = document.getElementById("selectValue");
+
+      window.onload = function () {
+        slideOne();
+        slideTwo();
+      };
+
+      let sliderOne = document.getElementById("slider-1");
+      let sliderTwo = document.getElementById("slider-2");
+      let displayValOne = document.getElementById("range1");
+      let displayValTwo = document.getElementById("range2");
+
+      let displayRangeOne = document.getElementById("show_range_val_1");
+      let displayRangeTwo = document.getElementById("show_range_val_2");
+
+      let minGap = 5;
+      let sliderTrack = document.querySelector(".slider-track");
+      let sliderMaxValue = document.getElementById("slider-1").max;
+
+      function slideOne() {
+        if (parseInt(sliderTwo.value) - parseInt(sliderOne.value) <= minGap) {
+          sliderOne.value = parseInt(sliderTwo.value) - minGap;
+        }
+        displayValOne.textContent = sliderOne.value;
+        displayRangeOne.textContent = sliderOne.value;
+      }
+
+      function slideTwo() {
+        if (parseInt(sliderTwo.value) - parseInt(sliderOne.value) <= minGap) {
+          sliderTwo.value = parseInt(sliderOne.value) + minGap;
+        }
+        displayValTwo.textContent = sliderTwo.value;
+        displayRangeTwo.textContent = sliderTwo.value;
+      }
+      // Slider End
+
+      let guest_size = 0;
+      let set_guest_num = document.getElementById("set_guest_num");
+
+      function decrement() {
+        if (guest_size == 0) {
+          document.getElementById("guest_size").innerText = guest_size;
+        } else {
+          guest_size -= 1;
+          document.getElementById("guest_size").innerText = guest_size;
+        }
+      }
+
+      function increment() {
+        guest_size += 1;
+        document.getElementById("guest_size").innerText = guest_size;
+      }
+
+      function on_add_guest() {
+        let guest_val = document.getElementById("guest_val");
+        guest_val.value = guest_size;
+        set_guest_num.classList.toggle("hidden");
+      }
+
+      function popup_guest() {
+        set_guest_num.classList.toggle("hidden");
+        set_price_num.classList.add("hidden");
+      }
+
+      let hdpkr = new HotelDatepicker(document.getElementById("input-id"));
+      let inputId = document.getElementById("input-id");
+
+      function show_alert() {
+        let list = inputId.value.split(" ");
+        let no_of_guests = document.getElementById("guest_val").value;
+        if (guest_size != 0) {
+          guest_size = no_of_guests;
+        }
+
+        let place = document.getElementById("search_val").value;
+
+        if (place == "" || !inputId.value) {
+          alert(
+            "Dear User, \nIt seems youhave not given the checkin date or the destination.\n\nPlease try again."
+          );
+        } else {
+          alert(
+            "Search: " +
+              place +
+              "\n" +
+              "Checkin: " +
+              list[0] +
+              "\nCheckout: " +
+              list[2] +
+              "\nGuests: " +
+              guest_size +
+              "\n" +
+              "Price range: " +
+              sliderOne.value +
+              " - " +
+              sliderTwo.value
+          );
+          // window.location.href("success.html");
+
+          window.location.href = "/success.html";
+        }
+      }
     </script>
+    <script src="/js/weather_script.js"></script>
+    <script src="/js/dummyWeatherData.js"></script>
+    <script src="/js/search_script.js"></script>
+    <script src="/js/suggestions.js"></script>
+    <script src="/js/dummyJson.js"></script>
   </body>
 </html>

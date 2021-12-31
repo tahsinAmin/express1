@@ -26,9 +26,7 @@ app.set("view engine", "ejs");
 app.get("/all/:country/:city", limiter, ({ params }, res) => {
   const { country, city } = params;
   const curerentDate = "2021-12-29";
-  // console.log(country, city);
   var data = fs.readFileSync("data.json");
-  // const url_api = `http://api.weatherapi.com/v1/current.json?key=e6a73467a3e94aa184c122435212812&q=${city}&aqi=no`;
   const url_api = `https://api.weatherapi.com/v1/history.json?key=e6a73467a3e94aa184c122435212812&q=${country}&q=${city}&dt=${curerentDate}&aqi=yes`;
 
   var jsonRead = JSON.parse(data);
@@ -38,7 +36,6 @@ app.get("/all/:country/:city", limiter, ({ params }, res) => {
   for (let i = 0; i < jsonRead.length; i++) {
     const q = jsonRead[i]["location"]["name"].toLocaleLowerCase();
     if (q == city) {
-      // var object = jsonRead[i];
       console.log("Fetch from json file");
       flag = !flag;
       gottem = jsonRead[i];
@@ -231,5 +228,3 @@ app.get("/all/:country/:city", limiter, ({ params }, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => console.log(`Server starting at port ${PORT}`));
-
-// https://www.youtube.com/watch?v=PozEoga90r8
