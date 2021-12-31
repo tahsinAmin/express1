@@ -40,6 +40,10 @@
   display 403 HTTP Forbidden server responses)
 - My duplicate hotkeys don't work
 
+# Problems and their solutiuons:
+
+- "http://localhost:3000/all/bangladesh/fecha-master/dist/fecha.min.js” was blocked due to MIME type (“text/html”) mismatch (X-Content-Type-Options: nosniff)". So, it wasn't able to load the file. That's because it wasn't in the static folder, which was initialized as the puiblic folder
+
 # Late Submission Reason
 
 - Implementing Programming Move
