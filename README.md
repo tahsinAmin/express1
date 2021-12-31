@@ -10,6 +10,7 @@
 - [x] 8. Write in json file if object not present
 - [x] 9. Show Data from json file if present
 - [x] 10. Showing a page with an error meesage If no city found with that name
+- [x] 11. Using Historical data to show in page
 
 # Optimization
 
@@ -24,6 +25,15 @@
 - Javascript
 - TailwindCSS(CSS framework)
 
-# functions
+# Things that I've learned
 
 - Rate Limiter
+- Deconstructor
+- ReadFile and Write File
+- Api call using axios
+
+# Removing bad conventions
+
+- Remove "if (object == undefined) {"
+- remove the variable name
+- whether we have our data in the json file or get it from api, before sending i to html, we have to do the weather calculation. So, wee need to put the code calculation on both of their blocks. Is their an alternatove way to it? (Function call)
