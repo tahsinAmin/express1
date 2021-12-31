@@ -12,7 +12,7 @@
 - [x] 10. Showing a page with an error meesage If no city found with that name
 - [x] 11. (Historical Data) Able to show 1 average data and show the same value in everywhere
 - [x] 12. (Historical Data) Able to show 4 average data
-- [ ] 13. (Historical Data) find the lowest and higest temp and show it
+- [x] 13. (Historical Data) find the higest & the lowest temp and show it
 
 # Optimization
 
@@ -39,7 +39,13 @@
 - Remove "if (object == undefined) {"
 - remove the variable name
 - whether we have our data in the json file or get it from api, before sending i to html, we have to do the weather calculation. So, wee need to put the code calculation on both of their blocks. Is their an alternatove way to it? (Function call)
+- Remove truncate class from index
 
 # Problem
 
 - My duplicate hotkeys don't work
+
+# Late Submission Reason
+
+- Implementing Programming Move
+- Code not work in office but works home
