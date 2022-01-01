@@ -16,12 +16,20 @@ npm run dev
 
 Open [http://localhost:3000/all/Bangladesh/Dhaka](http://localhost:3000/all/Bangladesh/Dhaka) with your browser to see the result.
 
+You can manipulate the url link by changning the country and cuty name http://localhost:3000/all/COUNTRYNAME/CITYNAME
+
 # Tools Used
 
 - EJS (HTML template)
 - TailwindCSS(CSS framework)
 - Javascript
 - ExpressJS (NodeJS Framework)
+
+# Features
+
+- API to fetch weather data for a location
+- Showing a bad request page if invalid names given
+- Toggle to interchange Celcius and Farenhiet.
 
 # Tasks into chunks
 
