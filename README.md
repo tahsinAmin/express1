@@ -1,3 +1,28 @@
+This is a [NodeJS and ExpressJS](http://expressjs.com/) project followed by some additions of the previous project
+
+# Getting Started
+
+First, install all the dependencies:
+
+```bash
+npm install
+```
+
+Second, run the development server:
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000/all/Bangladesh/Dhaka](http://localhost:3000/all/Bangladesh/Dhaka) with your browser to see the result.
+
+# Tools Used
+
+- EJS (HTML template)
+- TailwindCSS(CSS framework)
+- Javascript
+- ExpressJS (NodeJS Framework)
+
 # Tasks into chunks
 
 - [x] 1. Reading the parameter
@@ -29,10 +54,10 @@
 
 # Removing bad practices
 
-- Remove "if (object == undefined) {"
-- remove the variable name, 'gottem'
-- whether we have our data in the json file or get it from api, before sending i to html, we have to do the weather calculation. So, wee need to put the code calculation on both of their blocks. Is their an alternatove way to it? (Function call)
-- Remove truncate class from index
+- [ ] Remove "if (object == undefined) {"
+- [ ] remove the variable name, 'gottem'
+- [ ] whether we have our data in the json file or get it from api, before sending i to html, we have to do the weather calculation. So, wee need to put the code calculation on both of their blocks. Is their an alternatove way to it? (Function call)
+- [x] Remove truncate class from index
 
 # Problem
 
@@ -48,11 +73,3 @@
 
 - Implementing Programming Move
 - Code not work in office but works home
-
-# Tools Used
-
-- EJS (HTML template)
-- TailwindCSS(CSS framework)
-- Javascript
-- NodeJS
-- ExpressJS
