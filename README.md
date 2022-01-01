@@ -31,6 +31,7 @@ You can manipulate the url link by changning the country and city name http://lo
 - Showing a bad request page if invalid names given
 - Toggle to interchange Celcius and Farenhiet.
 - If a city name was searched before, the next time, it'll retrieve data from our json file file instead of fetching rthe API.
+- Rate limit included. So, this will limit the number of requests a user can make within a given duration (10 seconds)
 
 # Tasks, Todos & Problems face while making the project (Optional)
 
