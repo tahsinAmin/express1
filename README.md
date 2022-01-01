@@ -16,7 +16,7 @@ npm run dev
 
 Open [http://localhost:3000/all/Bangladesh/Dhaka](http://localhost:3000/all/Bangladesh/Dhaka) with your browser to see the result.
 
-You can manipulate the url link by changning the country and cuty name http://localhost:3000/all/COUNTRYNAME/CITYNAME
+You can manipulate the url link by changning the country and city name http://localhost:3000/all/COUNTRYNAME/CITYNAME
 
 # Tools Used
 
@@ -30,8 +30,11 @@ You can manipulate the url link by changning the country and cuty name http://lo
 - API to fetch weather data for a location
 - Showing a bad request page if invalid names given
 - Toggle to interchange Celcius and Farenhiet.
+- If a city name was searched before, the next time, it'll retrieve data from our json file file instead of fetching rthe API.
 
-# Tasks into chunks
+# Tasks, Todos & Problems face while making the project (Optional)
+
+## Tasks into chunks
 
 - [x] 1. Reading the parameter
 - [x] 2. Axios Data fetct with city name using axios
@@ -48,36 +51,36 @@ You can manipulate the url link by changning the country and cuty name http://lo
 - [x] 13. (Historical Data) find the higest & the lowest temp and show it
 - [x] 14. Adding the code under previous project
 
-# Optimization
+## Optimization
 
 - [ ] 404 Page betterment
 - [ ] Put the whole project here.
 
-# Things that I've learned
+## Things that I've learned
 
 - Rate Limiter
 - Deconstructor
 - ReadFile and Write File
 - Api call using axios
 
-# Removing bad practices
+## Removing bad practices
 
 - [ ] Remove "if (object == undefined) {"
 - [ ] remove the variable name, 'gottem'
 - [ ] whether we have our data in the json file or get it from api, before sending i to html, we have to do the weather calculation. So, wee need to put the code calculation on both of their blocks. Is their an alternatove way to it? (Function call)
 - [x] Remove truncate class from index
 
-# Problem
+## Problem
 
 - Bad Request page appears in home PC but not in Office PC (Task: we will
   display 403 HTTP Forbidden server responses)
 - My duplicate hotkeys don't work
 
-# Problems and their solutiuons:
+## Problems and their solutiuons:
 
 - "http://localhost:3000/all/bangladesh/fecha-master/dist/fecha.min.js” was blocked due to MIME type (“text/html”) mismatch (X-Content-Type-Options: nosniff)". So, it wasn't able to load the file. That's because it wasn't in the static folder, which was initialized as the puiblic folder
 
-# Late Submission Reason
+## Late Submission Reason
 
 - Implementing Programming Move
 - Code not work in office but works home
