@@ -25,7 +25,7 @@ app.set("view engine", "ejs");
 
 app.get("/all/:country/:city", limiter, ({ params }, res) => {
   const { country, city } = params;
-  const curerentDate = "2022-01-05";
+  const curerentDate = "2022-01-04";
   var data = fs.readFileSync("data.json");
   const url_api = `https://api.weatherapi.com/v1/history.json?key=e6a73467a3e94aa184c122435212812&q=${country}&q=${city}&dt=${curerentDate}&aqi=yes`;
 
